@@ -1,0 +1,24 @@
+<nav class="navbar navbar-light bg-main-light justify-content-between">
+  <div class="container">
+    <div>
+      <a class="navbar-brand text-main-dark">URL shortener</a>
+    </div>
+    <div>
+      {% if not 'user' in session or session['user'] == None %}
+        <a id="open-login" class="text-main-dark" data-toggle="popover" href="#" title="Login" data-content='{% include "login_form.html" %}'>
+          <i class="fas fa-user"></i> Login
+        </a>
+      {% else %}
+        <div class="dropdown">
+          <a class="text-main-dark" data-toggle="dropdown" href="#" title="Login" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i> {{ session['user']['username'] }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/profile">Profile</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} URL shortener {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Short</th>
+                    <th>Target</th>
+                    <th>Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in pages %}
+                    <tr>
+                        <td><a href="/s/{{ page.short }}">{{ base_url }}/s/{{ page.short }}</a></td>
+                        <td><a href="{{ page.url }}">{{ page.url }}</a></td>
+                        <td>{{ page.visits }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} URL shortener {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form id="form" class="mt-2">
+            <div class="form-group">
+                <input type="text" class="form-control mb-1" id="link" name="link" placeholder="Link to be shorten">
+                <div class="row">
+                    <div class="input-group col-md-6 mb-1">
+                        <input type="text" class="form-control" id="shorten" name="shorten" placeholder="Short link" disabled>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" onclick="copyToClipboard('#shorten')" type="button">Copy</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="form-control btn btn-primary mb-1">Work the magic!</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    $(document).ready(function(){
+        $("#form").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "/shorten",
+                data: { link: $("#link").val() },
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    $("#shorten").val(window.location.host+"/s/"+data.shorten);
+                }
+            });
+        });
+    });
+{% endblock %}

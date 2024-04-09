@@ -1,0 +1,15 @@
+<form action="/auth" method="post">
+    <div class="form-group">
+        {% with messages = get_flashed_messages(category_filter="login_error") %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <input type="text" class="form-control mb-1" id="username" name="username" placeholder="Username">
+        <input type="password" class="form-control mb-1" id="password" name="password" placeholder="Password">
+        <button name="auth-type" type="submit" value="login" class="form-control btn btn-success mb-1">Login</button>
+        <button name="auth-type" type="submit" value="register" class="form-control btn btn-primary mb-1">Register</button>
+    </div>
+</form>
