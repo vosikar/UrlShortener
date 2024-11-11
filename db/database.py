@@ -22,7 +22,7 @@ def insert(table: str, values: Dict[str, str]):
         return False
 
     query_values: str = ", ".join(["?"] * len(values))
-    sql: str = f"INSERT INTO {table} ({",".join(values.keys())}) VALUES ({query_values})"
+    sql: str = f"INSERT INTO {table} ({','.join(values.keys())}) VALUES ({query_values})"
 
     try:
         res = cursor.execute(sql, tuple(values.values()))
@@ -43,7 +43,7 @@ def select_one(table: str, values: Dict[str, str], columns: List[str] = ["*"]):
     else:
         where: str = ""
 
-    sql: str = f"SELECT {",".join(columns)} FROM {table} {where}"
+    sql: str = f"SELECT {','.join(columns)} FROM {table} {where}"
     return connection.cursor().execute(sql, tuple(values.values())).fetchone()
 
 
@@ -56,7 +56,7 @@ def select_many(table: str, values: Dict[str, str], columns: List[str] = ["*"]):
     else:
         where: str = ""
 
-    sql: str = f"SELECT {",".join(columns)} FROM {table} {where}"
+    sql: str = f"SELECT {','.join(columns)} FROM {table} {where}"
     return cursor.execute(sql, tuple(values.values())).fetchall()
 
 
@@ -69,7 +69,7 @@ def update(table: str, database_id: int, values: Dict[str, object]) -> DatabaseR
         update_values.append(f"{key} = ?")
     query_values: List[str] = list(values.values())
     query_values.append(str(database_id))
-    sql: str = f"UPDATE {table} SET {",".join(update_values)} WHERE id=?"
+    sql: str = f"UPDATE {table} SET {','.join(update_values)} WHERE id=?"
     cursor.execute(sql, tuple(query_values))
     connection.commit()
     return DatabaseResponse.SUCCESS
